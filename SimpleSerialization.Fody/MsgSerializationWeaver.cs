@@ -6,7 +6,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 
-public class ModuleWeaver : BaseModuleWeaver {
+public class MsgSerializationWeaver : BaseModuleWeaver {
 
   public override bool ShouldCleanReference => false;
 

@@ -6,9 +6,10 @@
   <ItemGroup>
     <PackageReference Include="Fody" Version="6.1.0" PrivateAssets="none" />
     <ProjectReference Include="../SimpleSerialization/SimpleSerialization.csproj" />
+    <ProjectReference Include="../SimpleSerialization.Fody/SimpleSerialization.Fody.csproj" />
     <WeaverFiles
       Include="../SimpleSerialization.Fody/bin/$(Configuration)/netcoreapp3.1/SimpleSerialization.Fody.dll"
-      WeaverClassNames="ModuleWeaver"
+      WeaverClassNames="MsgSerializationWeaver"
     />
   </ItemGroup>
 </Project>
