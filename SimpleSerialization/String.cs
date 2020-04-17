@@ -15,9 +15,7 @@ public partial class Serializer {
 
   public void String(ref string v) {
     if (isWriting) {
-      var hasValue = v != null;
-      Bool(ref hasValue);
-      if (hasValue) {
+      if (WriteNullState(v)) {
         WriteLength(v.Length);
         if (v.Length > 0) {
           temp = encoding.GetBytes(v);
@@ -25,9 +23,7 @@ public partial class Serializer {
         }
       }
     } else {
-      var hasValue = false;
-      Bool(ref hasValue);
-      if (hasValue) {
+      if (ReadNullState()) {
         var length = ReadLength();
         if (length > 0) {
           v = encoding.GetString(buffer, size, length * 2);
@@ -43,12 +39,18 @@ public partial class Serializer {
 
   public void Strings(ref string[] v) {
     if (isWriting) {
-      WriteLength(v.Length);
-      for (var i = 0; i < v.Length; i++) String(ref v[i]);
+      if (WriteNullState(v)) {
+        WriteLength(v.Length);
+        for (var i = 0; i < v.Length; i++) String(ref v[i]);
+      }
     } else {
-      var length = ReadLength();
-      v = new string[length];
-      for (var i = 0; i < v.Length; i++) String(ref v[i]);
+      if (ReadNullState()) {
+        var length = ReadLength();
+        v = new string[length];
+        for (var i = 0; i < v.Length; i++) String(ref v[i]);
+      } else {
+        v = null;
+      }
     }
   }
 

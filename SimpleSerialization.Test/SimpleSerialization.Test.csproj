@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="DeepEqual" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -10,9 +11,6 @@
     <PackageReference Include="Fody" Version="6.1.0" PrivateAssets="none" />
     <ProjectReference Include="../SimpleSerialization/SimpleSerialization.csproj" />
     <ProjectReference Include="../SimpleSerialization.Fody/SimpleSerialization.Fody.csproj" />
-    <WeaverFiles
-      Include="../SimpleSerialization.Fody/bin/$(Configuration)/netcoreapp3.1/SimpleSerialization.Fody.dll"
-      WeaverClassNames="MsgSerializationWeaver"
-    />
+    <WeaverFiles Include="../SimpleSerialization.Fody/bin/$(Configuration)/netcoreapp3.1/SimpleSerialization.Fody.dll" WeaverClassNames="MsgSerializationWeaver" />
   </ItemGroup>
 </Project>

@@ -11,15 +11,11 @@ public partial class Serializer {
 
   public void Msg<T>(ref T v) where T : Msg, new() {
     if (isWriting) {
-      var hasValue = v != null;
-      Bool(ref hasValue);
-      if (hasValue) {
+      if (WriteNullState(v)) {
         v.Serialize(this);
       }
     } else {
-      var hasValue = false;
-      Bool(ref hasValue);
-      if (hasValue) {
+      if (ReadNullState()) {
         v = new T();
         v.Serialize(this);
       } else {
@@ -30,12 +26,18 @@ public partial class Serializer {
 
   public void Msgs<T>(ref T[] v) where T : Msg, new() {
     if (isWriting) {
-      WriteLength(v.Length);
-      for (var i = 0; i < v.Length; i++) Msg(ref v[i]);
+      if (WriteNullState(v)) {
+        WriteLength(v.Length);
+        for (var i = 0; i < v.Length; i++) Msg(ref v[i]);
+      }
     } else {
-      var length = ReadLength();
-      v = new T[length];
-      for (var i = 0; i < v.Length; i++) Msg(ref v[i]);
+      if (ReadNullState()) {
+        var length = ReadLength();
+        v = new T[length];
+        for (var i = 0; i < v.Length; i++) Msg(ref v[i]);
+      } else {
+        v = null;
+      }
     }
   }
 

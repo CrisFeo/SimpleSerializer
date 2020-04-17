@@ -59,6 +59,18 @@ public partial class Serializer {
     return length;
   }
 
+  bool WriteNullState(object v) {
+    var hasValue = v != null;
+    Bool(ref hasValue);
+    return hasValue;
+  }
+
+  bool ReadNullState() {
+    var hasValue = false;
+    Bool(ref hasValue);
+    return hasValue;
+  }
+
 }
 
 }

@@ -20,27 +20,29 @@ public partial class Serializer {
 
   public void Uints(ref uint[] v) {
     if (isWriting) {
-      WriteLength(v.Length);
-      for (var i = 0; i < v.Length; i++) Uint(ref v[i]);
+      if (WriteNullState(v)) {
+        WriteLength(v.Length);
+        for (var i = 0; i < v.Length; i++) Uint(ref v[i]);
+      }
     } else {
-      var length = ReadLength();
-      v = new uint[length];
-      for (var i = 0; i < v.Length; i++) Uint(ref v[i]);
+      if (ReadNullState()) {
+        var length = ReadLength();
+        v = new uint[length];
+        for (var i = 0; i < v.Length; i++) Uint(ref v[i]);
+      } else {
+        v = null;
+      }
     }
   }
 
   public void UintNullable(ref uint? v) {
     if (isWriting) {
-      var hasValue = v.HasValue;
-      Bool(ref hasValue);
-      if (hasValue) {
+      if (WriteNullState(v)) {
         var value = v.Value;
         Uint(ref value);
       }
     } else {
-      var hasValue = false;
-      Bool(ref hasValue);
-      if (hasValue) {
+      if (ReadNullState()) {
         uint value = default;
         Uint(ref value);
         v = value;
