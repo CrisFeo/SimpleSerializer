@@ -8,6 +8,11 @@ using SimpleSerialization;
 static class TestUtils {
 
   public static void AssertSerialization<T>(T input) where T : Msg, new() {
+    var actual = RoundTripSerialize(input);
+    actual.ShouldDeepEqual(input);
+  }
+
+  public static T RoundTripSerialize<T>(T input) where T : Msg, new() {
     byte[] msg;
     {
       var s = new Serializer(1600);
@@ -16,13 +21,13 @@ static class TestUtils {
       msg = new byte[s.Size];
       Buffer.BlockCopy(s.Buffer, 0, msg, 0, s.Size);
     }
+    var output = new T();
     {
       var s = new Serializer(1600);
       s.BeginRead(msg);
-      var actual = new T();
-      actual.Serialize(s);
-      actual.ShouldDeepEqual(input);
+      output.Serialize(s);
     }
+    return output;
   }
 
 }
