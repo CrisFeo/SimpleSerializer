@@ -1,10 +1,11 @@
+DOTNET?='/mnt/c/Program Files/dotnet/dotnet.exe'
 DOTNET_ARGS=-noLogo -clp:NoSummary -v n
 
 .PHONY: clean
 clean:
-	dotnet clean $(DOTNET_ARGS)
+	$(DOTNET) clean $(DOTNET_ARGS)
 	rm -rf bin obj
 
 .PHONY: build
 build:
-	dotnet build $(DOTNET_ARGS)
+	$(DOTNET) build $(DOTNET_ARGS)

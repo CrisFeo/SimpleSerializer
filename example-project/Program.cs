@@ -38,21 +38,23 @@ class State : Msg {
   public Vec2 velocity;
   public Vec2[] foci;
   public Vec3 higherOrder;
+  public Vec3 morePosition;
   public string[] thoughts;
   public Status status;
   public Status[] subStatuses;
   public string idea;
   public float? mojo;
   public override string ToString() => Printer.Render(this, p => {
-    p.Val("position",    position);
-    p.Val("velocity",    velocity);
-    p.Val("foci",        foci);
-    p.Val("higherOrder", higherOrder);
-    p.Val("thoughts",    thoughts);
-    p.Val("status",      status);
-    p.Val("subStatuses", subStatuses);
-    p.Val("idea",        idea);
-    p.Val("mojo",        mojo);
+    p.Val("position",     position);
+    p.Val("velocity",     velocity);
+    p.Val("foci",         foci);
+    p.Val("higherOrder",  higherOrder);
+    p.Val("morePosition", morePosition);
+    p.Val("thoughts",     thoughts);
+    p.Val("status",       status);
+    p.Val("subStatuses",  subStatuses);
+    p.Val("idea",         idea);
+    p.Val("mojo",         mojo);
   });
 }
 
@@ -77,6 +79,7 @@ static class Program {
           new Vec2{ x = 50000.2f, y=-4000 },
         },
         higherOrder = new Vec3{ x = 1, y = 23.2f, z = null },
+        morePosition = new Vec3{ x = 12.3f, y = 0, z = 32.1f },
         thoughts = new string[]{ "I like cheese", "how much is cow" },
         status = Status.Run,
         subStatuses = new Status[] { Status.Run, Status.Walk },
